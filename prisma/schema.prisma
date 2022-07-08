@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @unique @default(autoincrement())
+  email     String    @unique
+  hash      String
+  fullName  String?
+  phone     Int       @unique
+  address   String?
+  role      Role      @default(USER)
+  isAdmin   Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  deletedAt DateTime?
+  createdBy String    @default("Admin")
+  updatedBy String?   @default("Admin")
+  deletedBy String?
+  authCode  Int?
+  introCode Int?
+  // Product   Product[]
+}
+
+model Product {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String
+  imageLink   String
+  category    Category  @default(FASTFOOD)
+  status      Status    @default(NOTAVAILABLE)
+  price       Int?      @default(0)
+  // userId      Int
+  // user        User      @relation(fields: [userId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+  deletedAt   DateTime?
+  createdBy   String    @default("Admin")
+  updatedBy   String?   @default("Admin")
+  deletedBy   String?
+
+  @@map("products")
+}
+
+model Table {
+  id        Int       @id @unique @default(autoincrement())
+  number    Int
+  imageLink String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  deletedAt DateTime?
+  createdBy String    @default("Admin")
+  updatedBy String?   @default("Admin")
+  deletedBy String?
+}
+
+enum Status {
+  AVAILABLE
+  NOTAVAILABLE
+}
+
+enum Category {
+  FASTFOOD
+  SEAFOOD
+  GRILLEDFOOD
+  STEWEDFOOD
+  DIETFOOD
+  VEGETARIANFOOD
+  SALAD
+  BEVERAGES
+}
+
+enum Role {
+  USER
+  GENERALMANAGER
+  ASSISTANTMANAGER
+  WAITER
+  WAITRESS
+  FASTFOODCOOK
+  CHEF
+  KITCHENMANAGER
+  DISHWASHERWORKER
+  CASHIER
+  RESTAURANTCOUNTER
+  SERVER
+  BUSSER
+  BARBACK
+  ACCOUNTANTS
+}
