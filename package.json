@@ -1,8 +1,8 @@
 {
   "name": "restaurant",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "nest js restaurant project",
+  "author": "https://github.com/mhdyshah",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
